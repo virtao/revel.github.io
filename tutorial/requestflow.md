@@ -1,25 +1,21 @@
 ---
-title: The Request Flow
+title: 请求流程
 layout: tutorial
 ---
 
-In the [previous article](createapp.html) we created a new Revel application
-called **myapp**. In this article we look at how Revel handles the HTTP request
-to http://localhost:9000/, resulting in the welcome message.
+在[上一篇文章](createapp.html)中我们创建了一个叫做**myapp**的 Revel 程序。本篇文章中，我们将介绍 Revel 是如何处理发送到 http://localhost:9000/ 的HTTP请求并返回一个欢迎信息的。
 
-### Routes
+### 路由(Routes)
 
-The first thing that Revel does is check the **conf/routes** file -- the
-generated routes file contains a route:
+Revel 首先要做的是检查 **conf/routes** 下的文件，自动生成的路由文件包含以下内容：
 
 	GET     /                                       App.Index
 
-This tells Revel to invoke the **Index** method of the **App**
-controller when it receives a **GET** request to **/**.
+这个配置的意思是，当收到一个**GET**请求，请求路径是 **/** 时，Revel将调用**App**控制器下的**Index**方法。
 
-### Actions
+### 动作(Actions)
 
-Let's follow this call to the code, in **app/controllers/app.go**:
+我们在 **app/controllers/app.go** 里找到这个方法：
 
 	package controllers
 
@@ -33,20 +29,13 @@ Let's follow this call to the code, in **app/controllers/app.go**:
 		return c.Render()
 	}
 
-All controllers must be structs that embed `*revel.Controller`
-in the first slot (directly or indirectly). Any method on a controller that is
-exported and returns a `revel.Result` may be treated as an Action.
+所有的 Revel 控制器(controllers)必须是一个嵌入`*revel.Controller`的结构体（直接地或间接地）。而且`*revel.Controller`需要放在结构体的首位。在这个结构体相关联方法中，返回值是`revel.Result`类型的方法将被视为一个动作(Actions)。
 
-The Revel controller provides many useful methods for generating Results. In
-this example, it calls [`Render()`](../docs/godoc/mvc.html#Controller.Render),
-which tells Revel to find and render a template as the response (**200 OK**).
+Revel控制器提供了很多方法用于生成 Result 。在这个例子中，我们调用了 [`Render()`](../docs/godoc/mvc.html#Controller.Render) 方法，作用是让Revel寻找合适的模板渲染，并返回给客户端(**200 OK**)。
 
-### Templates
+### 模板(Templates)
 
-All templates are kept in the **app/views** directory. When an explicit
-template name is not specified, Revel looks for a template matching the action.
-In this case, Revel finds the **app/views/App/Index.html** file, and
-renders it as a [Go template](http://www.golang.org/pkg/html/template).
+所有的模板都保存在 **app/views** 文件夹中。如果不明确指明模板的名字，Revel会默认以动作名称来匹配模板。在这个例子中，Revel会自动查找 **app/views/App/Index.html** 文件，并将其作为[Go 模板](http://www.golang.org/pkg/html/template) 来渲染。以下是这个模板的内容：
 
 {% raw %}
 
@@ -76,18 +65,17 @@ renders it as a [Go template](http://www.golang.org/pkg/html/template).
 
 {% endraw %}
 
-Beyond the functions provided by the Go templates, Revel adds
-[a few helpful ones](../manual/templates.html) of its own.
+除了 Go 模板本身提供的功能， Revel 还添加了[少量有用的功能](../manual/templates.html)。
 
-This template is very simple.  It:
+这个模板非常简单，它做了：
 
-1. Adds a new **title** variable to the render context.
-2. Includes the **header.html** template (which uses the title).
-3. Displays a welcome message.
-4. Includes the **flash.html** template, which shows any flashed messages.
-5. Includes the **footer.html**.
+1. 添加了一个新的模板相关变量 **title** 。
+2. 包含了 **header.html** 模板（此模板用到了title变量）。
+3. 显示一个欢迎信息。
+4. 包含了 **flash.html** 模板，用来显示快捷信息。
+5. 包含了 **footer.html** 模板。
 
-If you look at header.html, you can see some more template tags in action:
+如果查看 header.html，你会发现更多的模板标签：
 
 {% raw %}
 
@@ -110,57 +98,52 @@ If you look at header.html, you can see some more template tags in action:
 
 {% endraw %}
 
-You can see the title being set, and you can also see that it accepts JS and CSS
-files included from calling templates in the **moreStyles** and **moreScripts**
-variables.
+可以看到通过模板标签设置了网页标题，还有通过模板标签遍历两个变量 **moreStyles** 和 **moreScripts**，来包含更多的JS脚本和CSS样式表。 
 
-### Hot-reload
+### 热部署
 
-Let's change the welcome message.  In **Index.html**, change
+我们改变一下欢迎信息。在 **Index.html** 中，将
 
 	<h1>It works!</h1>
 
-to
+改为
 
 	<h1>Hello World</h1>
 
-Refresh your browser, and you should see the change immediately!  Revel noticed
-that your template changed and reloaded it.
+刷新你的浏览器，你会发现改变瞬间生效了！ Revel 会监控你模板的改变，并重新加载它。
 
-Revel watches:
+Revel 监控：
 
-* All go code under **app/**
-* All templates under **app/views/**
-* Your routes file: **conf/routes**
+* **app/** 下所有的Go代码
+* **app/views/** 下所有的模板 
+* 路由文件 **conf/routes**
 
-Changes to any of those will cause Revel to update your running app with the
-newest code.  Try it right now: open **app/controllers/app.go** and introduce
-an error.
+改变以上任何的内容，Revel 都会马上更新运行的程序。下面我们马上实验一下：打开 **app/controllers/app.go** 并且故意写错。
 
-Change
+修改
 
 	return c.Render()
 
-to
+为
 
 	return c.Renderx()
 
-Refresh the page and Revel will display a helpful error message:
+刷新页面，Revel会显示一个很有用的错误信息：
 
-![A helpful error message](../img/helpfulerror.png)
+![一个很有用的错误信息](../img/helpfulerror.png)
 
-Lastly, let's pass some data into the template.
+最后，我们给模板传递一些数据。
 
-In **app/controllers/app.go**, change:
+在 **app/controllers/app.go** 中，将：
 
 	return c.Renderx()
 
-to:
+改为：
 
 	greeting := "Aloha World"
 	return c.Render(greeting)
 
-In **app/views/App/Index.html**, change:
+在 **app/views/App/Index.html** 中，将：
 
 {% raw %}
 
@@ -168,7 +151,7 @@ In **app/views/App/Index.html**, change:
 
 {% endraw %}
 
-to:
+改为：
 
 {% raw %}
 
@@ -176,8 +159,8 @@ to:
 
 {% endraw %}
 
-Refresh the page and you should see your Hawaiian greeting.
+刷新页面，你会看到来自夏威夷语的问候。
 
-![A Hawaiian greeting](../img/AlohaWorld.png)
+![来自夏威夷语的问候](../img/AlohaWorld.png)
 
-**Next: [Make a simple Hello World application](firstapp.html).**
+**下一篇： [编写一个简单的 Hello World 程序](firstapp.html)。**

@@ -1,39 +1,31 @@
 ---
-title: Concepts
+title: 概念
 layout: manual
 ---
 
-Revel is a batteries-included web framework in the spirit of Rails or Play!
-Framework.  Many of the same (proven) ideas are incorporated in the framework
-design and interface.
+Revel 是一个功能齐全的 Web 框架，继承了 Rails 或 Play!
+Framework 的精髓。许多很好的（久经考验的）想法被整合到了本框架的设计和接口中。
 
-Revel makes it easy to build web applications using the Model-View-Controller
-(MVC) pattern by relying on conventions that require a certain structure in your
-application.  In return, it is very light on configuration and enables an
-extremely fast development cycle.
+Revel 使用了模型-视图-控制器(MVC)设计模式，并通过约定好的代码结构，让 Web 应用开发更加的简单。这样可以减少程序的配置，并且极大地缩短了开发周期。
 
 ## MVC
 
-Here is a quick summary:
+这里是个大概的总结：
 
-- *Models* are the essential data objects that describe your application domain.
-   Models also contain domain-specific logic for querying and updating the data.
-- *Views* describe how data is presented and manipulated. In our case, this is
-   the template that is used to present data and controls to the user.
-- *Controllers* handle the request execution.  They perform the user's desired
-   action, they decide which View to display, and they prepare and provide the
-   necessary data to the View for rendering.
+- *Models* 是用来描述应用程序所需数据的对象。
+   Models 也包含专门用于数据查询和更新的逻辑代码。
+- *Views* 用于描述数据如何被呈现和修改。在这里，我们使用模板向用户展示数据及对数据的操作方法。
+- *Controllers* 用来处理请求。他们执行用户期望的动作，决定哪个视图被呈现，并为视图的渲染提供必要的数据。
 
-There are many excellent overviews of MVC structure online.  In particular, the
-one provided by [Play! Framework](http://www.playframework.org) matches our model exactly.
+网上有许多关于 MVC 的优秀论述。其中，由[Play! Framework](http://www.playframework.org)提供的论述能够很好的匹配我们的模型。
 
-## Life of a Request
+## Request 的生命周期
 
-Here is an overview of the request processing framework.
+这里是请求处理框架的概览。
 
-![Life of a Request](../img/RevelDesign.png)
+![Request 的生命周期](../img/RevelDesign.png)
 
-Concept summary:
+概念摘要：
 
 * Revel exposes a single http.Handler, responsible for instantiating the
   Controller (the context for the request) and passing the request along to the

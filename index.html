@@ -1,9 +1,9 @@
 ---
 root: .
-title: The Revel Web Framework for Go
+title: Go语言Web开发框架Revel
 ---
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
   <head>
     {% include head.html %}
     <link href="{{ page.root }}/css/prettify.css" type="text/css" rel="stylesheet" />
@@ -15,7 +15,7 @@ title: The Revel Web Framework for Go
   <body onload="prettyPrint()">
     <a href="https://github.com/revel/revel">
       <img style="position: absolute; top: 0; right: 0; border: 0; z-index:1000;"
-           src="img/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
+           src="img/forkme_right_orange_ff7600.png" alt="在GitHub上Fork我"></a>
 
     {% include topnav.html %}
 
@@ -25,7 +25,7 @@ title: The Revel Web Framework for Go
           <div class="hero-img"><img src="img/RevelWhiteLines.png" height="500" width="350"></div>
           <div class="hero-text">
             <h1>Revel</h1>
-            <p>A high-productivity web framework for the Go language.</p>
+            <p>一个Go语言下的高效Web开发框架</p>
           </div>
         </div>
       </div>
@@ -33,59 +33,58 @@ title: The Revel Web Framework for Go
 
     <div class="container">
       <div class="page-header">
-        <h1>Features</h1>
+        <h1>特性</h1>
       </div>
       <div class="row">
         <div class="span4">
-          <h2>Hot Code Reload</h2>
+          <h2>热部署</h2>
           <p>
-            Edit, save, and refresh.  Revel compiles your code and templates for
-            you, so you don't miss a beat.  Code doesn't compile?  It gives you a
-            <a href="img/CompilationError.png">helpful description</a>.
-            Run-time code panic?  Revel <a href="img/Panic.png">has you
-            covered</a>.
+            编辑→保存→刷新。Revel会为你自动编译代码和模板，无需等待。代码没有自动编译？Revel会给你一个
+            <a href="img/CompilationError.png">有帮助的信息</a>。
+            运行环境崩溃（panic）？Revel <a href="img/Panic.png">完全可以
+            处理</a>。
           </p>
         </div>
         <div class="span4">
-          <h2>Comprehensive</h2>
+          <h2>全方位</h2>
           <p>
-            Revel provides
-            <a href="manual/routing.html">routing</a>,
-            <a href="manual/binding.html">parameter parsing</a>,
-            <a href="manual/validation.html">validation</a>,
-            <a href="manual/sessionflash.html">session/flash</a>,
-            <a href="manual/templates.html">templating</a>,
-            <a href="manual/cache.html">caching</a>,
-            <a href="manual/jobs.html">job running</a>,
-            <a href="manual/testing.html">a testing framework</a>,
-            and even <a href="manual/i18n-messages.html">internationalization</a>.
+            Revel 提供
+            <a href="manual/routing.html">路由(routing)</a>,
+            <a href="manual/binding.html">参数处理(parameter parsing)</a>,
+            <a href="manual/validation.html">验证(validation)</a>,
+            <a href="manual/sessionflash.html">会话/存储(session/flash)</a>,
+            <a href="manual/templates.html">模板(templating)</a>,
+            <a href="manual/cache.html">缓存(caching)</a>,
+            <a href="manual/jobs.html">任务(job running)</a>,
+            <a href="manual/testing.html">测试框架(a testing framework)</a>,
+            甚至<a href="manual/i18n-messages.html">国际化(internationalization)</a>.
           </p>
         </div>
         <div class="span4">
-          <h2>High Performance</h2>
+          <h2>高性能</h2>
           <p>
-            Revel builds on top of the Go HTTP server, which was
-            <a href="http://www.techempower.com/benchmarks/#section=data-r5">recently
-            benchmarked</a> to serve <b>three to ten times</b> as many requests
-            as Rails across a variety of loads.
+            Revel构建在Go的HTTP服务器之上，根据
+            <a href="http://www.techempower.com/benchmarks/#section=data-r5">最近
+            测试</a>表明，其完全可以应付比Rails高 <b>三到十倍</b> 的
+            各类请求负载。
           </p>
         </div>
       </div>
       <div class="page-header">
-        <h1>Framework Design</h1>
+        <h1>框架设计</h1>
       </div>
       <div class="row">
         <div class="span4">
-          <h2>Synchronous</h2>
+          <h2>同步</h2>
           <p>
-            The <a href="http://golang.org/pkg/net/http/">Go HTTP server</a>
-            runs each request in its own
-            <a href="http://golang.org/doc/effective_go.html#goroutines">goroutine</a>.
-            Write simple callback-free code without guilt.
+            <a href="http://golang.org/pkg/net/http/">Go HTTP 服务器</a>
+            将每个请求都放在单独的
+            <a href="http://golang.org/doc/effective_go.html#goroutines">goroutine</a>中运行。
+            可以自由的编写简单的无回调代码。
           </p>
         </div>
         <div class="span4">
-          <h2>Stateless</h2>
+          <h2>无状态</h2>
           <p>
             Revel provides primitives that keep the web tier stateless for
             predictable scaling. For example, session data is stored in the user
@@ -93,12 +92,11 @@ title: The Revel Web Framework for Go
           </p>
         </div>
         <div class="span4">
-          <h2>Modular</h2>
+          <h2>模块化</h2>
           <p>
-            Revel is built around composable middleware called <b>filters</b>,
-            which implement nearly all request-processing
-            functionality. Developers have the freedom to replace the default
-            filters with custom implementations (e.g. a custom router).
+            Revel 由叫做 <b>filters</b> 的中间件构建而成，
+            它将几乎所有的请求处理过程模块化。开发者可以任意替换
+            默认的filters来实现自己的功能（例如：自定义路由）。
           </p>
         </div>
       </div>
@@ -106,28 +104,27 @@ title: The Revel Web Framework for Go
       </div>
       <section id="quickstart">
         <div class="page-header">
-          <h1>Quick Start</h1>
+          <h1>快速入门</h1>
         </div>
         <div class="row">
           <div class="span6">
             <p>
-              Revel ships with sample applications to provide examples of
-              real-world usage.
+              Revel 提供了一些现实当中使用的示例应用程序。
             </p>
             <p>
-              You will need a <a href="http://golang.org/doc/install">functioning Go 1.2
-              installation</a> for this to work.
+              你需要<a href="http://golang.org/doc/install">配置好的Go 1.2
+              环境</a> 来运行这些应用。
             </p>
             <p>
-              The commands at right will:
+              右边的命令的作用是：
               <ol>
-                <li>Install Revel into your GOPATH
-                <li>Build the Revel command-line tool
-                <li>Run the Chat sample application
+                <li>将 Revel 安装到 GOPATH 路径下
+                <li>编译 Revel 的命令行工具
+                <li>运行一个聊天的示例程序
               </ol>
-              Once it's running, open a browser to
-              <a href="http://localhost:9000/">http://localhost:9000/</a>, and
-              <a href="samples/chat.html">read how the chat demo is implemented</a>.
+              运行后，打开浏览器访问
+              <a href="http://localhost:9000/">http://localhost:9000/</a>，你也可以
+              <a href="samples/chat.html">看看它是怎么运行的</a>。
             </p>
           </div>
           <div class="span6" style="vertical-align:bottom;">

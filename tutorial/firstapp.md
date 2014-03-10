@@ -1,39 +1,35 @@
 ---
-title: The "Hello World" app
+title: "Hello World 程序"
 layout: tutorial
 ---
 
-This article runs through the quick exercise of implementing the "Hello World"
-application from
-[the Play! example](http://www.playframework.org/documentation/1.2.4/firstapp).
+这篇文章内容借鉴于[the Play! example](http://www.playframework.org/documentation/1.2.4/firstapp)的"Hello World"练习。
 
-Let's start with the **myapp** project that [we created previously](createapp.html).
+首先，打开[我们之前创建](createapp.html)的工程 **myapp**。
 
-Edit the **app/views/App/Index.html** template to add this form, under the
-included `flash.html` template:
+编辑 **app/views/App/Index.html** 模板，在包含`flash.html`模板的代码的下面添加以下表单：
 
 	<form action="/App/Hello" method="GET">
 	    <input type="text" name="myName" /><br/>
 	    <input type="submit" value="Say hello!" />
 	</form>
 
-Refresh the page to see our work.
+运行工程，可以看到我们的改动：
 
 ![The Say Hello form](../img/AlohaForm.png)
 
-Let's try submitting that form.
+我们尝试提交些内容：
 
 ![Route not found](../img/HelloRouteNotFound.png)
 
-That makes sense.  Add the action to **app/controllers/app.go**:
+这是意料之中的。在 **app/controllers/app.go** 中增加以下动作：
 
 	func (c App) Hello(myName string) revel.Result {
 		return c.Render(myName)
 	}
 
 
-Next, we have to create the view.  Create a file
-**app/views/App/Hello.html**, with this content:
+然后，我们要创建一个视图（view）。创建文件 **app/views/App/Hello.html**，并输入以下内容：
 
 {% raw %}
 	{{set . "title" "Home"}}
@@ -45,15 +41,13 @@ Next, we have to create the view.  Create a file
 	{{template "footer.html" .}}
 {% endraw %}
 
-Refresh the page, and you should see a greeting:
+刷新页面，你应该看到类似下图的问候：
 
 ![Hello revel](../img/Hellorevel.png)
 
-Lastly, let's add some validation.  The name should be required, and at least
-three characters.
+最后，我们添加一些验证。姓名不能为空，并且不能少于3个字符。
 
-To do this, let's use the [validation module](../manual/validation.html).  Edit
-your action in **app/controllers/app.go**:
+我们使用内置的[验证模块](../manual/validation.html)实现。编辑 **app/controllers/app.go**：
 
 	func (c App) Hello(myName string) revel.Result {
 		c.Validation.Required(myName).Message("Your name is required!")
@@ -68,11 +62,10 @@ your action in **app/controllers/app.go**:
 		return c.Render(myName)
 	}
 
-Now it will send the user back to `Index()` if they have not entered a valid
-name. Their name and the validation error are kept in the
-[Flash](../manual/sessionflash.html), which is a temporary cookie.
+现在，如果用户输入错误，程序将返回到`Index()`并且将错误信息保存在
+一个叫[闪存(Flash)](../manual/sessionflash.html)的临时空间中。
 
-The provided `flash.html` template will show any errors or flash messages:
+`flash.html` 模板会显示保存在临时空间中的错误提示：
 
 {% raw %}
 	{{if .flash.success}}
@@ -97,7 +90,7 @@ The provided `flash.html` template will show any errors or flash messages:
 	{{end}}
 {% endraw %}
 
-When we submit that form with a name that fails validation, we want the form to retain the bad name, so that the user can edit it before re-submitting.  Amend the form you had added to your **app/views/App/Index.html** template:
+当用户提交了一个格式错误的名字，我们希望能够保留这个错误的名字以供用户修改，那么把以下代码整合到 **app/views/App/Index.html** 模板中吧：
 
 	<form action="/App/Hello" method="GET">
 		{{with $field := field "myName" .}}
@@ -106,8 +99,8 @@ When we submit that form with a name that fails validation, we want the form to 
 		<input type="submit" value="Say hello!" />
 	</form>
 	
-Now when we submit a single letter as our name:
+现在我们提交一个字母的名字会有如下结果：
 
 ![Example error](../img/HelloNameNotLongEnough.png)
 
-Success, we got an appropriate error and our input was saved for us to edit.
+搞定，我们显示了错误消息，并且将用户输入的内容保存了下来以便用户再次修改。

@@ -1,59 +1,60 @@
 ---
-title: Getting Started
+title: 开始
 layout: tutorial
 ---
 
-This article walks through the installation process.
+这篇文章会介绍整个Revel安装过程。
 
-#### Install Go
+#### 安装 Go
 
-To use Revel, you first need to [install Go](http://golang.org/doc/install).
+想用Revel，首先要[安装 Go](http://golang.org/doc/install)。
 
-#### Set up your GOPATH
+#### 配置 GOPATH 环境变量
 
-If you did not create a GOPATH as part of installation, do so now.  Your GOPATH
-is a directory tree where all of your Go code will live.  Here are the steps to do that:
+如果你还没有创建一个 GOPATH 环境变量，需要马上做。 GOPATH
+ 是一个保存所有 Go 公共代码的目录。以下是设置步骤：
 
-1. Make a directory: `mkdir ~/gocode`
-2. Tell Go to use that as your GOPATH: `export GOPATH=~/gocode`
-3. Save your GOPATH so that it will apply to all future shell sessions: `echo GOPATH=$GOPATH >> .bash_profile`
+1. 创建一个目录： `mkdir ~/gocode`
+2. 创建 GOPATH 环境变量以便 Go 知道它在哪： `export GOPATH=~/gocode`
+3. 将 GOPATH 环境变量添加到自启动里，便于以后使用： `echo GOPATH=$GOPATH >> .bash_profile`
 
-Now your Go installation is complete.
+Go 安装完毕。
 
-#### Install git and hg
+#### 安装 git 和 hg
 
-Both Git and Mercurial are required to allow `go get` to clone various dependencies.
+`go get` 依赖于 Git 和 Mercurial 来下载代码。
 
-* [Installing Git](http://git-scm.com/book/en/Getting-Started-Installing-Git)
-* [Installing Mercurial](http://mercurial.selenic.com/wiki/Download)
+* [Git安装教程](http://git-scm.com/book/en/Getting-Started-Installing-Git)
+* [Mercurial安装教程](http://mercurial.selenic.com/wiki/Download)
 
-#### Get the Revel framework
+#### 获取 Revel 框架
 
-To get the Revel framework, run
+运行以下命令获取 Revel 框架：
 
 	go get github.com/revel/revel
 
-This command does a couple things:
+这个命令做了下面两件事：
 
-* Go uses git to clone the repository into `$GOPATH/src/github.com/revel/revel/`
-* Go transitively finds all of the dependencies and runs `go get` on them as well.
+* Go 使用 git 将仓库克隆到 `$GOPATH/src/github.com/revel/revel/`
+* Go 查找仓库代码的所有依赖，并用同样的`go get`方法下载到 GOPATH  中。
 
-*__Note:__ if you are upgrading from v0.8 or earlier, see the [v0.9.0 release notes](https://github.com/revel/revel/releases/tag/v0.9.0) for detailed instructions.*
+*__注意：__ 如果你是从v0.8或更早的版本升级而来，请看 [v0.9.0 发行说明](https://github.com/revel/revel/releases/tag/v0.9.0) 获取更多的说明。*
 
-#### Build the Revel command line tool
+#### 编译 Revel 命令行工具
 
-The Revel command line tool is how you build, run, and package Revel applications.
+Revel 命令行工具是一个创建、运行、打包 Revel 程序的工具。
 
-Use `go get` to install it:
+使用 `go get` 命令安装它：
+
 
 	go get github.com/revel/cmd/revel
 
-Then, ensure the $GOPATH/bin directory is in your PATH so that you can reference the command from anywhere.
+然后，确保 $GOPATH/bin 目录在 PATH 环境变量中，以便你可以在任何地方运行 Revel 命令行工具。
 
 	export PATH="$PATH:$GOPATH/bin"
 	echo 'PATH="$PATH:$GOPATH/bin"' >> .bash_profile
 
-Lastly, let's verify that it works:
+最后，我们试试它是不是正常工作：
 
 	$ revel help
 	~
@@ -70,6 +71,6 @@ Lastly, let's verify that it works:
 
 	Use "revel help [command]" for more information.
 
-Now we are all set up.
+设置完毕。
 
-**Next: [Create a new Revel application.](createapp.html)**
+**下一篇： [新建一个 Revel 程序](createapp.html)**
