@@ -43,11 +43,64 @@ New apps start with **dev** and **prod** run modes defined, but the user may
 create any sections they wish.  The run mode is chosen at runtime by the
 argument provided to "revel run" (the [command-line tool](tool.html)).
 
+## Dynamic parameters
+
+Besides static configuration, Revel also supports dynamic configuration by injecting
+environment variables or the value of other parameters.
+
+### Environment variables
+
+In most cases, you'll want to load sensitive values from environment variables
+rather than storing them in your configuration file. The syntax for including an
+environment variable is similar to the shell syntax: `${ENV_VAR_NAME}`.
+
+Example:
+
+	app.name = chat
+	http.port = 9000
+	
+	db.driver = ${CHAT_DB_DRIVER}
+	db.spec = ${CHAT_DB_SPEC}
+	
+Revel will then load the `CHAT_DB_DRIVER` and `CHAT_DB_SPEC` environment variables,
+and inject them into the config at runtime.
+
+### Composing other parameters
+
+To incorporate the value of one parameter into another, you can "unfold" it by using
+the `%(var_name)s` syntax (note the 's' at the end).
+
+Example:
+
+	app.name = chat
+	http.port = 9000
+	
+	log.warn.output = %(app.name)s.log
+	log.error.output = %(app.name)s.log
+
+Will be parsed by revel/config as:
+
+	app.name=chat
+	http.port=9000
+
+	log.warn.output = chat.log
+	log.error.output = chat.log
+
 ## Custom properties
 
 The developer may define custom keys and access them via the
 [`revel.Config` variable](../docs/godoc/revel.html#variables), which exposes a
 [simple api](../docs/godoc/config.html).
+
+Example:
+
+    var mode string
+    if revel.Config.BoolDefault("mode.prod", false) {
+      mode = "prod"
+    } else {
+      mode = "dev"    
+    }
+    revel.INFO.Printf("Running in %s mode.", mode)
 
 ## Built-in properties
 
@@ -64,7 +117,7 @@ Example:
 
 Default: no value
 
-***
+
 #### app.secret
 
 The secret key used for cryptographic operations
@@ -89,7 +142,7 @@ Example:
 
 	http.port = 9000
 
-***
+
 #### http.addr
 
 The IP address on which to listen.
@@ -99,7 +152,7 @@ silently converted to `"localhost"`
 
 Default: ""
 
-***
+
 #### harness.port
 
 Specifies the port for the application to listen on, when run by the harness.
@@ -112,7 +165,7 @@ when running in an environment that restricts socket access by the program.
 
 Default: 0
 
-***
+
 #### http.ssl
 
 If true, Revel's web server will configure itself to accept SSL connections. This
@@ -120,11 +173,13 @@ requires an X509 certificate and a key file.
 
 Default: false
 
+
 #### http.sslcert
 
 Specifies the path to an X509 certificate file.
 
 Default: ""
+
 
 #### http.sslkey
 
@@ -143,7 +198,7 @@ before the entire template has been fully rendered.
 
 Default: false
 
-***
+
 #### results.pretty
 
 Configures [`RenderXml`](../docs/godoc/controller.html#RenderXml) and
@@ -167,12 +222,12 @@ For example:
 
 Default: ""
 
-***
+
 #### i18n.cookie
 
 Specifies the name of the cookie used to store the user's locale.
 
-Default: "%(cookie.prefix)_LANG" (see cookie.prefix)
+Default: "%(cookie.prefix)\_LANG" (see cookie.prefix)
 
 ### Watchers
 
@@ -186,14 +241,14 @@ configuration keys.  (This is appropriate for production deployments)
 
 Default: true
 
-***
+
 #### watch.templates
 
 If true, Revel will watch your views for changes and reload them as necessary.
 
 Default: true
 
-***
+
 #### watch.routes
 
 If true, Revel will watch your `routes` file for changes and reload as
@@ -201,7 +256,7 @@ necessary.
 
 Default: true
 
-***
+
 #### watch.code
 
 If true, Revel will watch your Go code for changes and rebuild your application
@@ -215,10 +270,12 @@ Default: true
 ### Cookies
 
 Revel components use the following cookies by default:
+
 * REVEL_SESSION
 * REVEL_LANG
 * REVEL_FLASH
 * REVEL_ERRORS
+
 
 #### cookie.prefix
 
@@ -230,6 +287,7 @@ For example,
 	cookie.prefix = MY
 
 would result in the following cookie names:
+
 * MY_SESSION
 * MY_LANG
 * MY_FLASH
@@ -250,7 +308,7 @@ the result is not always guaranteed.
 
 ### Templates
 
-#### template.delimiters 
+#### template.delimiters
 
 Specifies an override for the left and right delimiters used in the templates.  
 The delimiters must be specified as "LEFT\_DELIMS RIGHT\_DELIMS"
@@ -262,15 +320,17 @@ Default: "\{\{ \}\}"
 #### format.date
 
 Specifies the default date format for the application.  Revel uses this in two places:
+
 * Binding dates to a `time.Time` (see [binding](binding.html))
 * Printing dates using the `date` template function (see [template funcs](templates.html))
 
 Default: "2006-01-02"
 
-***
+
 #### format.datetime
 
 Specifies the default datetime format for the application.  Revel uses this in two places:
+
 * Binding dates to a `time.Time` (see [binding](binding.html))
 * Printing dates using the `datetime` template function (see [template funcs](templates.html))
 
@@ -284,7 +344,7 @@ Specifies the import path of the desired database/sql driver for the db module.
 
 Default: ""
 
-***
+
 #### db.driver
 
 Specifies the name of the database/sql driver (used in
@@ -292,7 +352,7 @@ Specifies the name of the database/sql driver (used in
 
 Default: ""
 
-***
+
 #### db.spec
 
 Specifies the data source name of your database/sql database (used in
@@ -317,6 +377,7 @@ TODO
 
 The [cache](cache.html) module is a simple interface to a heap or distributed cache.
 
+
 #### cache.expires
 
 Sets the default duration before cache entries are expired from the cache.  It
@@ -329,7 +390,7 @@ It is specified as a duration string acceptable to
 
 Default: "1h" (1 hour)
 
-***
+
 #### cache.memcached
 
 If true, the cache module uses [memcached](http://memcached.org) instead of the
@@ -337,7 +398,7 @@ in-memory cache.
 
 Default: false
 
-***
+
 #### cache.hosts
 
 A comma-separated list of memcached hosts.  Cache entries are automatically
@@ -360,11 +421,9 @@ Named cron schedules may be configured by setting a key of the form:
 That schedule may then be referenced upon submission to the job runner. For
 example:
 
-<pre class="prettyprint lang-go">
-jobs.Schedule("cron.schedulename", job)
-</pre>
+	jobs.Schedule("cron.schedulename", job)
 
-***
+
 #### jobs.pool
 
 The number of jobs allowed to run concurrently.  For example:
@@ -375,7 +434,7 @@ If 0, there is no limit imposed.
 
 Default: 10
 
-***
+
 #### jobs.selfconcurrent
 
 If true, allows a job to run even if previous instances of that job are still in

@@ -75,8 +75,6 @@ As part of handling a HTTP request, Revel instantiates an instance of your
 Controller, and it sets all of these properties on the embedded
 `revel.Controller`.  Revel does not share Controller instances between requests.
 
-***
-
 A **Controller** is any type that embeds `*revel.Controller` (directly or indirectly).
 {% raw %}
 <pre class="prettyprint lang-go">
@@ -87,6 +85,7 @@ type AppController struct {
 {% endraw %}
 
 An **Action** is any method on a **Controller** that meets the following criteria:
+
 * is exported
 * returns a revel.Result
 

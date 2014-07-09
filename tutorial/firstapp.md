@@ -43,7 +43,7 @@ layout: tutorial
 
 刷新页面，你应该看到类似下图的问候：
 
-![Hello revel](../img/Hellorevel.png)
+![Hello revel](../img/HelloRevel.png)
 
 最后，我们添加一些验证。姓名不能为空，并且不能少于3个字符。
 
@@ -92,13 +92,15 @@ layout: tutorial
 
 当用户提交了一个格式错误的名字，我们希望能够保留这个错误的名字以供用户修改，那么把以下代码整合到 **app/views/App/Index.html** 模板中吧：
 
+{% raw %}
 	<form action="/App/Hello" method="GET">
 		{{with $field := field "myName" .}}
 			<input type="text" name="{{$field.Name}}" value="{{$field.Flash}}"/><br/>
 		{{end}}
 		<input type="submit" value="Say hello!" />
 	</form>
-	
+{% endraw %}
+
 现在我们提交一个字母的名字会有如下结果：
 
 ![Example error](../img/HelloNameNotLongEnough.png)

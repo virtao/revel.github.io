@@ -31,7 +31,7 @@ Revel 首先要做的是检查 **conf/routes** 下的文件，自动生成的路
 
 所有的 Revel 控制器(controllers)必须是一个嵌入`*revel.Controller`的结构体（直接地或间接地）。而且`*revel.Controller`需要放在结构体的首位。在这个结构体相关联方法中，返回值是`revel.Result`类型的方法将被视为一个动作(Actions)。
 
-Revel控制器提供了很多方法用于生成 Result 。在这个例子中，我们调用了 [`Render()`](../docs/godoc/mvc.html#Controller.Render) 方法，作用是让Revel寻找合适的模板渲染，并返回给客户端(**200 OK**)。
+Revel控制器提供了很多方法用于生成 Result 。在这个例子中，我们调用了 [`Render()`](../docs/godoc/controller.html#Controller.Render) 方法，作用是让Revel寻找合适的模板渲染，并返回给客户端(**200 OK**)。
 
 ### 模板(Templates)
 
@@ -80,13 +80,14 @@ Revel控制器提供了很多方法用于生成 Result 。在这个例子中，�
 {% raw %}
 
 	<!DOCTYPE html>
+
 	<html>
 	  <head>
 	    <title>{{.title}}</title>
 	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	    <link rel="stylesheet" type="text/css" media="screen" href="/public/stylesheets/main.css">
-	    <link rel="shortcut icon" type="image/png" href="/public/images/favicon.png">
-	    <script src="/public/javascripts/jquery-1.5.2.min.js" type="text/javascript" charset="utf-8"></script>
+	    <link rel="stylesheet" type="text/css" href="/public/css/bootstrap.css">
+	    <link rel="shortcut icon" type="image/png" href="/public/img/favicon.png">
+	    <script src="/public/js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
 	    {{range .moreStyles}}
 	      <link rel="stylesheet" type="text/css" href="/public/{{.}}">
 	    {{end}}

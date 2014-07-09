@@ -16,7 +16,7 @@ layout: tutorial
 
 1. 创建一个目录： `mkdir ~/gocode`
 2. 创建 GOPATH 环境变量以便 Go 知道它在哪： `export GOPATH=~/gocode`
-3. 将 GOPATH 环境变量添加到自启动里，便于以后使用： `echo GOPATH=$GOPATH >> .bash_profile`
+3. 将 GOPATH 环境变量添加到自启动里，便于以后使用： `echo export GOPATH=$GOPATH >> ~/.bash_profile`
 
 Go 安装完毕。
 
@@ -52,7 +52,7 @@ Revel 命令行工具是一个创建、运行、打包 Revel 程序的工具。
 然后，确保 $GOPATH/bin 目录在 PATH 环境变量中，以便你可以在任何地方运行 Revel 命令行工具。
 
 	export PATH="$PATH:$GOPATH/bin"
-	echo 'PATH="$PATH:$GOPATH/bin"' >> .bash_profile
+	echo 'export PATH="$PATH:$GOPATH/bin"' >> ~/.bash_profile
 
 最后，我们试试它是不是正常工作：
 
